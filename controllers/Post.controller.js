@@ -1,6 +1,6 @@
 import UserRoles from '../config/UserRoles.js';
 import Post from '../models/post.model.js';
-import Tag from '../models/Tag.model.js';
+import Tag from '../models/tag.model.js';
 
 class PostController {
   create = async (req, res) => {
