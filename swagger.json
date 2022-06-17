@@ -1,0 +1,1159 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Blog Post API",
+    "description": "Rich Featured Blog Post Node JS Api"
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "API for Authentication"
+    },
+    {
+      "name": "Categories",
+      "description": "API for Categories"
+    },
+    {
+      "name": "Posts",
+      "description": "API for Posts"
+    },
+    {
+      "name": "Tags",
+      "description": "API for Tags"
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "Person Information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterUserBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User Registered!",
+            "schema": {
+              "$ref": "#/definitions/AuthUserResponse"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login as a user",
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "Person Information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginUserBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Logged In!",
+            "schema": {
+              "$ref": "#/definitions/AuthUserResponse"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Logout as a user",
+        "responses": {
+          "200": {
+            "description": "User Logged Out!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        }
+      }
+    },
+    "/category": {
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a new category",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "Category Information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category Created!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "responses": {
+          "201": {
+            "description": "All Categories!",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategoryResponseBody"
+              }
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
+    "/category/{slug}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get category by slug",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Category Slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category",
+            "schema": {
+              "$ref": "#/definitions/CategoryResponseBody"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Categories"],
+        "summary": "Update category by slug",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Category slug",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "New Category Name",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category Updated",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete category by slug",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Category slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category Deleted",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/tag": {
+      "post": {
+        "tags": ["Tags"],
+        "summary": "Create a new tag",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "Tag Information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateTagBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Created!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Tags"],
+        "summary": "Get all tags",
+        "responses": {
+          "201": {
+            "description": "All Tags!",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TagResponseBody"
+              }
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
+    "/tag/{slug}": {
+      "get": {
+        "tags": ["Tags"],
+        "summary": "Get tag by slug",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Tag Slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag",
+            "schema": {
+              "$ref": "#/definitions/TagResponseBody"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Tags"],
+        "summary": "Update tag by slug",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Tag slug",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "New Tag Name",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateTagBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Updated",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Tags"],
+        "summary": "Delete tag by slug",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Tag slug",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Deleted",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Create a new post",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Post Title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "description": "Post Content",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "in": "formData",
+            "description": "Post Tags",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categories",
+            "in": "formData",
+            "description": "Post Categories",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "photo",
+            "in": "formData",
+            "description": "Post Photo",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post Created!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get all posts",
+        "responses": {
+          "201": {
+            "description": "All Posts!",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PostResponseBody"
+              }
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
+    "/post/{id}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get post by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post",
+            "schema": {
+              "$ref": "#/definitions/PostDetailResponseBody"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      },
+      "put": {  
+        "tags": ["Posts"],
+        "summary": "Update post by id",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Post Title",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "description": "Post Content",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "in": "formData",
+            "description": "Post Tags",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categories",
+            "in": "formData",
+            "description": "Post Categories",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "photo",
+            "in": "formData",
+            "description": "Post Photo",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Updated",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Delete post by id",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post Deleted",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post/{id}/like": {
+      "patch": {
+        "tags": ["Posts"],
+        "summary": "Like a Post",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post Liked",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post/{id}/unlike": {
+      "patch": {
+        "tags": ["Posts"],
+        "summary": "Unlike a Post",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post Unliked",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post/{id}/comment": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Comment to a Post",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "description": "Comment Content",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCommentBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comment shared!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post/{id}/comment/{commentId}": {
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Delete a comment from Post",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "Comment Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comment deleted!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/post/{id}/view": {
+      "patch": {
+        "tags": ["Posts"],
+        "summary": "Increate Post's View Count by One",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Post Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post's View Count is Increased!",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          },
+          "401": {
+            "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RegisterUserBody": {
+      "type": "object",
+      "properties": {
+        "full_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginUserBody": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "AuthUserResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "full_name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CreateCategoryBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "CategoryResponseBody": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        }
+      }
+    },
+    "CreateTagBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "TagResponseBody": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        }
+      }
+    },
+    "PostResponseBody": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "object",
+          "properties": {
+            "_id": { "type": "string" },
+            "username": { "type": "string" },
+            "full_name": { "type": "string" },
+            "email": { "type": "string" },
+            "profile": { "type": "string" },
+            "hashed_password": { "type": "string" },
+            "salt": { "type": "string" },
+            "role": { "type": "number" },
+            "reset_password_link": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+          }
+        },
+        "photo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "view": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "PostDetailResponseBody": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "object",
+          "properties": {
+            "_id": { "type": "string" },
+            "username": { "type": "string" },
+            "full_name": { "type": "string" },
+            "email": { "type": "string" },
+            "profile": { "type": "string" },
+            "hashed_password": { "type": "string" },
+            "salt": { "type": "string" },
+            "role": { "type": "number" },
+            "reset_password_link": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategoryResponseBody"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TagResponseBody"
+          }
+        },
+        "photo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "view": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "likes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user_id": { "type": "string" },
+              "_id": { "type": "string" }
+            }
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "user_id": { "type": "string" },
+              "_id": { "type": "string" },
+              "content": { "type": "string" },
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "CreateCommentBody": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "errors": {
+    "Status400": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "description": "Access token is missing or invalid",
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Access token is missing or invalid"
+        }
+      }
+    }
+  }
+}
