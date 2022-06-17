@@ -7,7 +7,7 @@ import mongooes from 'mongoose';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import routes from './routes/index.js';
-import swaggerDocument from './swagger.json';
+import swaggerDocument from './swagger.json' assert {type: "json"};
 
 // env
 dotenv.config();
