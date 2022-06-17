@@ -1,5 +1,5 @@
 import User from '../models/user.model.js';
-import shortId from 'shortId';
+import shortId from 'shortid';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import UserRoles from '../config/UserRoles.js';
