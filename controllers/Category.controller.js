@@ -1,4 +1,5 @@
 import Category from '../models/category.model.js';
+import postModel from '../models/post.model.js';
 import Post from '../models/post.model.js';
 
 class CategoryController {
@@ -51,22 +52,106 @@ class CategoryController {
     });
   };
 
-  get = async (req, res) => {
-    const { slug } = req.params;
+  get = (req, res) => {
+    const { id } = req.params;
     // Check if slug exist
-    if (slug) {
+    if (id) {
       // Find Category by Slug
-      Category.findOne({ slug }).exec((error, category) => {
+      Category.findById(id).exec(async (error, category) => {
         // If any error happens return 400
         if (error) res.status(400).json({ error });
         // If no category found then return 404
         if (!category) res.status(404).json({ error: 'Category Not Found!' });
         // Return success
-        else res.status(200).json({ category });
+        else {
+          const promises = [];
+          promises.push(
+            new Promise((resolve, reject) => {
+              Post.find({ categories: category._id }).count((err, count) => {
+                if (err) reject({ err });
+                resolve(count);
+              });
+            })
+          );
+          promises.push(
+            new Promise((resolve, reject) => {
+              Post.aggregate([{ $match: { categories: category._id } }, { $group: { _id: null, amount: { $sum: '$view' } } }]).exec((err, view) => {
+                if (err) reject({ err });
+                resolve(view?.[0]?.amount);
+              });
+            })
+          );
+          promises.push(
+            new Promise((resolve, reject) => {
+              Post.aggregate([
+                { $match: { categories: category._id } },
+                {
+                  $project: {
+                    likes: { $size: '$likes' },
+                  },
+                },
+                {
+                  $group: {
+                    _id: null,
+                    amount: {
+                      $sum: '$likes',
+                    },
+                  },
+                },
+              ]).exec((err, view) => {
+                if (err) reject({ err });
+                resolve(view?.[0]?.amount);
+              });
+            })
+          );
+          promises.push(
+            new Promise((resolve, reject) => {
+              Post.aggregate([
+                { $match: { categories: category._id } },
+                {
+                  $project: {
+                    comments: { $size: '$comments' },
+                  },
+                },
+                {
+                  $group: {
+                    _id: null,
+                    amount: {
+                      $sum: '$comments',
+                    },
+                  },
+                },
+              ]).exec((err, view) => {
+                if (err) reject({ err });
+                resolve(view?.[0]?.amount);
+              });
+            })
+          );
+          const [count, view, likes, comments] = await Promise.all(promises).catch((err) => console.log(err));
+
+          res.status(200).json({ category: { ...category._doc, count, view, likes, comments } });
+        }
       });
     } else {
       res.status(400).json({ error: 'Slug is required!' });
     }
+  };
+
+  getPostsOfCategory = (req, res) => {
+    const { id } = req.params;
+    const filter = req.query.filter;
+    const [field, sort] = filter.split(' ');
+    const sortObject = {};
+    sortObject[field] = sort;
+
+    Post.find({ categories: id })
+      .populate('user_id')
+      .sort(sortObject)
+      .limit(10)
+      .exec((error, posts) => {
+        if (error) res.status(400).json({ error });
+        else res.status(200).json({ posts });
+      });
   };
 
   delete = async (req, res) => {

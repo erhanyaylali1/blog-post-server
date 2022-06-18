@@ -8,7 +8,8 @@ const router = express.Router();
 
 router.post('/', category_create_validator, runValidators, requireSignin, admin_middleware, CategoryController.create);
 router.get('/', CategoryController.getAll);
-router.get('/:slug', CategoryController.get);
+router.get('/:id', CategoryController.get);
+router.get('/:id/posts', CategoryController.getPostsOfCategory);
 router.put('/:slug', category_create_validator, requireSignin, auth_middleware, CategoryController.update);
 router.delete('/:slug', requireSignin, admin_middleware, CategoryController.delete);
 
