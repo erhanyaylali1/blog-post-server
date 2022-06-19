@@ -37,12 +37,26 @@ const userSchema = new mongooes.Schema(
       trim: true,
     },
     photo: {
-      data: Buffer,
-      contentType: String,
+      type: Buffer,
     },
     reset_password_link: {
       type: String,
       default: '',
+    },
+    about: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    domain: {
+      type: String,
+    },
+    job: {
+      type: String,
+    },
+    birthday: {
+      type: String,
     },
   },
   { timestamp: true }
@@ -67,10 +81,7 @@ userSchema.methods = {
   encrpytPassword: function (password) {
     if (!password) return '';
     try {
-      return crypto
-        .createHmac('sha1', this.salt)
-        .update(password)
-        .digest('hex');
+      return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
     } catch (err) {
       return '';
     }

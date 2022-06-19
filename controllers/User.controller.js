@@ -113,6 +113,28 @@ class AuthController {
         }
       });
   };
+
+  update_profile = (req, res) => {
+    const id = req.params.id;
+    const { photo, about, domain, country, job, birthday } = req.body;
+    User.findById(id).exec(async (err, user) => {
+      if (err) return res.status(400).json({ error: err });
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      else {
+        if (photo) user.photo = photo;
+        if (about) user.about = about;
+        if (domain) user.domain = domain;
+        if (country) user.country = country;
+        if (job) user.job = job;
+        if (birthday) user.birthday = birthday;
+
+        user.save((err) => {
+          if (err) return res.status(400).json({ error: err });
+          return res.status(200).json({ message: 'User profile updated' });
+        });
+      }
+    });
+  };
 }
 
 export default new AuthController();
