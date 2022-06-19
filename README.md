@@ -36,8 +36,7 @@ Technologies
 --------------
 
 ### Home Page
-![image](https://user-images.githubusercontent.com/32177766/174133127-a35c9d5f-c956-4a0a-a8f0-24f6975947be.png)
-
+![image](https://user-images.githubusercontent.com/32177766/174497991-7c0d0fd6-6f68-439f-ad85-baf172aeb40c.png)
 --------------
 
 ### Create Post Page
@@ -65,30 +64,49 @@ Technologies
 
 --------------
 
-### Categories Page
-![image](https://user-images.githubusercontent.com/32177766/174134657-83251da1-55d8-4187-b4e7-739174e91e5b.png)
+### User Profile Likes Page
+![image](https://user-images.githubusercontent.com/32177766/174498026-f480a4eb-f8bb-44ab-9cf9-73182f67b276.png)
 
 --------------
 
-### Create Category Modal (Only Admin)
-![image](https://user-images.githubusercontent.com/32177766/174134738-2e5b8510-a932-4b63-b052-95cfccf764d2.png)
-
---------------
-
-### Create Tag Modal (Only Admin)
-![image](https://user-images.githubusercontent.com/32177766/174135101-62443cca-9d63-4a38-8768-8a67caa73b55.png)
-
+### User Profile Comments Page
+![image](https://user-images.githubusercontent.com/32177766/174498047-0a6907e4-af52-46b9-8777-3901d219fb8a.png)
 
 --------------
 
 ### Category Page
 ![image](https://user-images.githubusercontent.com/32177766/174457734-79efb3b6-61cf-4349-8c28-e24887976651.png)
 
-
 --------------
 
 ### Tag Page
 ![image](https://user-images.githubusercontent.com/32177766/174457751-a3acda29-b6cb-4f4e-a03a-fa0fc90928c5.png)
+
+--------------
+
+### Admin Dashboard
+![image](https://user-images.githubusercontent.com/32177766/174498077-a92fa1b7-fec3-4de0-a8a3-dd7a21ad1f31.png)
+
+--------------
+
+### Admin Dashboard - Manage Users
+![image](https://user-images.githubusercontent.com/32177766/174498097-afa9723e-a322-4673-b8c6-a986e3b90c0b.png)
+
+--------------
+
+### Admin Dashboard - Manage Categories and Tags
+![image](https://user-images.githubusercontent.com/32177766/174134657-83251da1-55d8-4187-b4e7-739174e91e5b.png)
+
+--------------
+
+### Admin Dashboard - Create Category Modal
+![image](https://user-images.githubusercontent.com/32177766/174134738-2e5b8510-a932-4b63-b052-95cfccf764d2.png)
+
+--------------
+
+### Admin Dashboard - Create Tag Modal
+![image](https://user-images.githubusercontent.com/32177766/174135101-62443cca-9d63-4a38-8768-8a67caa73b55.png)
+
 
 
 
