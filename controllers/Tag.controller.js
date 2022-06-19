@@ -145,7 +145,8 @@ class TagController {
     sortObject[field] = sort;
 
     Post.find({ tags: id })
-      .populate('user_id')
+      .select({ _id: 1, title: 1, content: 1, photo: 1, createdAt: 1 })
+      .populate({ path: 'user_id', select: ['_id', 'full_name', 'photo'] })
       .sort(sortObject)
       .limit(10)
       .exec((error, posts) => {

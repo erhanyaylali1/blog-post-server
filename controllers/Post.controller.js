@@ -1,3 +1,4 @@
+import mongooes from 'mongoose';
 import UserRoles from '../config/UserRoles.js';
 import Post from '../models/post.model.js';
 import Tag from '../models/tag.model.js';
@@ -59,7 +60,7 @@ class PostController {
   get_all = (req, res) => {
     // Get All Posts
     Post.find({})
-      .populate('user_id')
+      .populate({ path: 'user_id', select: ['_id', 'full_name', 'photo'] })
       .sort({ createdAt: 'desc' })
       .limit(50)
       .exec(async (error, posts) => {
@@ -75,7 +76,7 @@ class PostController {
   get = (req, res) => {
     // Get Post by Id
     Post.findById(req.params.id)
-      .populate('user_id')
+      .populate({ path: 'user_id', select: ['_id', 'full_name', 'photo'] })
       .populate('tags')
       .populate('categories')
       .populate('likes')
@@ -205,7 +206,7 @@ class PostController {
     // So if he/she liked, so he/she wont be able to like it again
     Post.updateOne(
       {
-        id: post_id,
+        _id: post_id,
         'likes.user_id': { $ne: user_id },
       },
       {
@@ -229,14 +230,14 @@ class PostController {
     const post_id = req.params.id;
 
     // Finds the post by id
-    Post.updateOne(
+    Post.findOneAndUpdate(
       {
-        id: post_id,
+        _id: post_id,
       },
       {
         // Removes user_id from likes array of this post
         $pull: {
-          likes: { user_id },
+          likes: { user_id: mongooes.Types.ObjectId(user_id) },
         },
       }
     ).exec((err, post) => {
@@ -256,7 +257,7 @@ class PostController {
 
     // Finds the post by id
     Post.updateOne(
-      { id: post_id },
+      { _id: post_id },
       {
         // Pushes user_id and content of comment to likes array of this post
         $push: {
