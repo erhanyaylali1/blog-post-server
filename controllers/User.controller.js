@@ -1,6 +1,9 @@
 import User from '../models/user.model.js';
 import Post from '../models/post.model.js';
 import mongooes from 'mongoose';
+import UserRoles from '../config/UserRoles.js';
+import nodeoutlook from 'nodejs-nodemailer-outlook';
+import { nanoid } from 'nanoid';
 
 class AuthController {
   get = (req, res) => {
@@ -196,6 +199,91 @@ class AuthController {
       else {
         return res.status(200).json({ message: 'User deleted' });
       }
+    });
+  };
+
+  update_account = (req, res) => {
+    const session_user = req.user;
+    const id = req.params.id;
+    if (session_user.role === UserRoles.Admin || session_user._id.toString() === id) {
+      const { full_name, email, password } = req.body;
+      User.findById(id).exec((err, user) => {
+        if (err) return res.status(400).json({ error: err });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        else {
+          if (full_name) user.full_name = full_name;
+          if (email) user.email = email;
+          if (password) user.password = password;
+          user.save((err) => {
+            if (err) return res.status(400).json({ error: err });
+            else return res.status(200).json({ message: 'User account updated' });
+          });
+        }
+      });
+    } else {
+      return res.status(403).json({ error: 'You are not authorized to update this account.' });
+    }
+  };
+
+  send_password_reset_link = (req, res) => {
+    const { email } = req.body;
+    User.findOne({ email }).exec((err, user) => {
+      if (err) return res.status(400).json({ error: err });
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      else {
+        const token = nanoid();
+        const link = `${process.env.CLIENT_URL}/reset-password/${token}`;
+        const html = `<h1>Password Reset</h1>
+            <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.
+            Please click on the following link, or paste this into your browser to complete the process:</p>
+            <a href=${link}>${link}</a>
+            <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`;
+        this.#sendEmail(email, 'Password Reset', html);
+        user.reset_password_link = token;
+        user.save((err) => {
+          if (err) return res.status(400).json({ error: err });
+          else return res.status(200).json({ message: 'Password reset link sent' });
+        });
+      }
+    });
+  };
+
+  check_password_reset_link = (req, res) => {
+    const { token } = req.params;
+    User.findOne({ reset_password_link: token }).exec((err, user) => {
+      if (err) return res.status(400).json({ error: err });
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      else return res.status(200).json({ message: 'Correct!' });
+    });
+  };
+
+  reset_password = (req, res) => {
+    const { password, token } = req.body;
+    User.findOne({ reset_password_link: token }).exec((err, user) => {
+      if (err) return res.status(400).json({ error: err });
+      if (!user) return res.status(404).json({ error: 'Incorrect Token!' });
+      else {
+        user.password = password;
+        user.reset_password_link = '';
+        user.save((err) => {
+          if (err) return res.status(400).json({ error: err });
+          return res.status(200).json({ message: 'Correct!' });
+        });
+      }
+    });
+  };
+
+  #sendEmail = (email, title, content) => {
+    nodeoutlook.sendEmail({
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+      from: process.env.EMAIL,
+      to: email,
+      subject: title,
+      html: content,
+      onError: (e) => console.error(e),
     });
   };
 }

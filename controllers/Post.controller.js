@@ -82,7 +82,7 @@ class PostController {
       .populate('likes')
       .populate({
         path: 'comments',
-        populate: { path: 'user_id' },
+        populate: { path: 'user_id', select: ['_id', 'full_name', 'photo'] },
       })
       .exec((error, post) => {
         // If any error happens, return 400
