@@ -31,11 +31,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-  })
-);
+app.use(cors());
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // routes
