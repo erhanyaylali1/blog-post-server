@@ -15,6 +15,9 @@ Features
 - Like to Post
 - Comment to Post
 - View Count
+- Reset Password (Send Reset link via email)
+- Update User
+- Admin Dashboard (Manager Users and Categories)
 
 Technologies
 --------------------------------
@@ -26,7 +29,22 @@ Technologies
 - Bootstrap, Material UI, Ant Design
 
 ### Login Page
-![image](https://user-images.githubusercontent.com/32177766/174133093-eb398bd4-4087-4a36-84f1-8ce0c14b8a7a.png)
+![image](https://user-images.githubusercontent.com/32177766/174599824-84d5745a-375e-4534-8044-23c44ae65c6a.png)
+
+--------------
+
+### Send Reset Password Email
+![image](https://user-images.githubusercontent.com/32177766/174599879-05276a1b-f89e-4122-b247-94a440b13cb2.png)
+
+--------------
+
+### Reset Password Email
+![image](https://user-images.githubusercontent.com/32177766/174600016-9e94c20e-d43e-4c31-89d4-06cfae4e3fb6.png)
+
+--------------
+
+### Reset Password Page
+![image](https://user-images.githubusercontent.com/32177766/174600137-a6782a49-befd-4f21-b526-a4032671bdfd.png)
 
 --------------
 
@@ -55,8 +73,7 @@ Technologies
 --------------
 
 ### User Profile Page
-![image](https://user-images.githubusercontent.com/32177766/174481589-0aaaa44e-5335-4312-bf32-108f353697d9.png)
-
+![image](https://user-images.githubusercontent.com/32177766/174600518-cf00f6d7-8e72-44e0-b21f-809afd2693fc.png)
 --------------
 
 ### User Profile Edit Page
@@ -65,15 +82,18 @@ Technologies
 --------------
 
 ### User Profile Likes Page
-![image](https://user-images.githubusercontent.com/32177766/174498026-f480a4eb-f8bb-44ab-9cf9-73182f67b276.png)
-
+![image](https://user-images.githubusercontent.com/32177766/174600563-6216f760-1a10-4d4b-b374-4957714cbdb2.png)
 --------------
 
 ### User Profile Comments Page
-![image](https://user-images.githubusercontent.com/32177766/174498047-0a6907e4-af52-46b9-8777-3901d219fb8a.png)
+![image](https://user-images.githubusercontent.com/32177766/174600602-91204543-4d0f-40db-8748-a14d6a6c4db4.png)
 
 --------------
 
+### User Account Page (Change name, email, password)
+![image](https://user-images.githubusercontent.com/32177766/174600676-106c8462-eb0c-47a2-a0df-ed47b0eab172.png)
+
+--------------
 ### Category Page
 ![image](https://user-images.githubusercontent.com/32177766/174457734-79efb3b6-61cf-4349-8c28-e24887976651.png)
 
