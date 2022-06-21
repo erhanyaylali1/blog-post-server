@@ -105,7 +105,7 @@ class PostController {
     const { title, content, tags, categories, photo } = req.body;
     const promises = [];
     // For each tag name
-    tags.forEach((new_tag) => {
+    tags?.forEach((new_tag) => {
       promises.push(
         new Promise((resolve, reject) => {
           // Checks if it exists in db

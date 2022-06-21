@@ -45,10 +45,10 @@ class AuthController {
         expiresIn: '2d',
       });
       res.cookie('token', token, { expiresIn: '1d' });
-      const { _id, username, full_name, email, role } = user;
+      const { _id, username, full_name, email, role, photo } = user;
       return res.status(200).json({
         token,
-        user: { _id, username, full_name, email, role },
+        user: { _id, username, full_name, email, role, photo },
       });
     });
   };
