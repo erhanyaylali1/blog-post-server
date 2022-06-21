@@ -13,6 +13,13 @@ const swaggerDocument = JSON.parse(await readFile(new URL('./swagger.json', impo
 // env
 dotenv.config();
 
+console.log('-----------------------');
+console.log('app');
+console.log(process.env.DATABASE_URI);
+console.log(process.env.JWT_SECRET);
+console.log(process.env.EMAIL);
+console.log('-----------------------');
+
 // db
 mongooes
   .connect(process.env.DATABASE_URI, { useNewUrlParser: true })
