@@ -58,35 +58,37 @@ Technologies
 --------------
 
 ### Create Post Page
-![image](https://user-images.githubusercontent.com/32177766/174134358-641e5e94-8ec1-464c-9123-f94930ce2ccd.png)
+![image](https://user-images.githubusercontent.com/32177766/174865291-7ae63f06-f456-44dd-a272-03d6f4d8b002.png)
 
 --------------
 
 ### View Post Page
-![image](https://user-images.githubusercontent.com/32177766/174304295-09e75ee5-b6a4-4176-a2b9-61bb77ea9a1c.png)
+![image](https://user-images.githubusercontent.com/32177766/174865325-5cec65e6-e748-414a-927e-e8aed722cc36.png)
 
 --------------
 
 ### Edit Post Page (If user is author or admin)
-![image](https://user-images.githubusercontent.com/32177766/174134515-c2537a1a-b1e9-4bf6-93c8-4d84eeb01936.png)
+![image](https://user-images.githubusercontent.com/32177766/174865374-eef08901-6fe1-4c16-8197-245d0609e32b.png)
 
 --------------
 
 ### User Profile Page
-![image](https://user-images.githubusercontent.com/32177766/174600518-cf00f6d7-8e72-44e0-b21f-809afd2693fc.png)
+![image](https://user-images.githubusercontent.com/32177766/174865444-a58192ae-0060-44fb-ae7c-561d975b9bfd.png)
+
 --------------
 
 ### User Profile Edit Page
-![image](https://user-images.githubusercontent.com/32177766/174481601-0c5f49f7-606c-4f93-864e-6dcd0ef98291.png)
+![image](https://user-images.githubusercontent.com/32177766/174865485-f5f3b863-4434-4bc8-b402-03cbc542a2e7.png)
 
 --------------
 
 ### User Profile Likes Page
-![image](https://user-images.githubusercontent.com/32177766/174600563-6216f760-1a10-4d4b-b374-4957714cbdb2.png)
+![image](https://user-images.githubusercontent.com/32177766/174865551-e8526924-7381-45b6-8386-e0a454a0b6a1.png)
+
 --------------
 
 ### User Profile Comments Page
-![image](https://user-images.githubusercontent.com/32177766/174600602-91204543-4d0f-40db-8748-a14d6a6c4db4.png)
+![image](https://user-images.githubusercontent.com/32177766/174865584-0a3fd560-504c-4da2-b7b9-738c082fcdac.png)
 
 --------------
 
