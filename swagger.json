@@ -277,6 +277,42 @@
         }
       }
     },
+    "/category/{id}/posts": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get category posts by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Sort Filter e.g 'createdAt asc`'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category",
+            "schema": {
+              "$ref": "#/definitions/CategoryPostsBody"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
+          }
+        }
+      }
+    },
     "/tag": {
       "post": {
         "tags": ["Tags"],
@@ -441,6 +477,42 @@
           },
           "401": {
             "$ref": "#/errors/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/tag/{id}/posts": {
+      "get": {
+        "tags": ["Tags"],
+        "summary": "Get tag posts by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tag Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Sort Filter e.g 'createdAt asc`'",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag",
+            "schema": {
+              "$ref": "#/definitions/CategoryPostsBody"
+            }
+          },
+          "400": {
+            "description": "Error Message!",
+            "schema": {
+              "$ref": "#/errors/Status400"
+            }
           }
         }
       }
@@ -993,6 +1065,45 @@
         },
         "count": {
           "type": "number"
+        }
+      }
+    },
+    "CategoryPostsBody": {
+      "type": "object",
+      "properties": {
+        "posts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "photo": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "user_id": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "full_name": {
+                    "type": "string"
+                  },
+                  "photo": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
