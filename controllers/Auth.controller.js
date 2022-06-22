@@ -28,7 +28,8 @@ class AuthController {
 
       new_user.save((error, user) => {
         if (error) res.status(400).json({ error });
-        return res.status(201).json({ user });
+        const { _id, full_name, username, email, role, photo } = user;
+        return res.status(201).json({ _id, full_name, username, email, role, photo });
       });
     });
   };

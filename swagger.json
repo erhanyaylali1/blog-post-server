@@ -52,7 +52,7 @@
           "201": {
             "description": "User Registered!",
             "schema": {
-              "$ref": "#/definitions/AuthUserResponse"
+              "$ref": "#/definitions/RegisterUserResponse"
             }
           },
           "400": {
@@ -570,7 +570,7 @@
           }
         }
       },
-      "put": {  
+      "put": {
         "tags": ["Posts"],
         "summary": "Update post by id",
         "security": [
@@ -914,6 +914,26 @@
         }
       }
     },
+    "RegisterUserResponse": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
     "AuthUserResponse": {
       "type": "object",
       "properties": {
@@ -936,6 +956,9 @@
               "type": "string"
             },
             "role": {
+              "type": "string"
+            },
+            "photo": {
               "type": "string"
             }
           }
