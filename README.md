@@ -3,6 +3,7 @@
 DESCRIPTION
 --------------------------------
 - A blog with rich text editor
+- Live on: https://blog-post-client.vercel.app/
 
 Features
 --------------------------------
