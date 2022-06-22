@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "title": "Blog Post API",
-    "description": "Rich Featured Blog Post Node JS Api"
+    "description": "Rich Featured Blog Post Node JS Api\n\nCheck Out Live: https://blog-post-client.vercel.app/\n\nDeveloped By Erhan Yaylalı.\nReach Me: https://www.yaylali.net"
   },
   "tags": [
     {
@@ -169,15 +169,15 @@
         }
       }
     },
-    "/category/{slug}": {
+    "/category/{id}": {
       "get": {
         "tags": ["Categories"],
-        "summary": "Get category by slug",
+        "summary": "Get category by id",
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Category Slug",
+            "description": "Category id",
             "required": true,
             "type": "string"
           }
@@ -199,7 +199,7 @@
       },
       "put": {
         "tags": ["Categories"],
-        "summary": "Update category by slug",
+        "summary": "Update category by id",
         "security": [
           {
             "token": []
@@ -207,9 +207,9 @@
         ],
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Category slug",
+            "description": "Category id",
             "required": true,
             "type": "string"
           },
@@ -243,7 +243,7 @@
       },
       "delete": {
         "tags": ["Categories"],
-        "summary": "Delete category by slug",
+        "summary": "Delete category by id",
         "security": [
           {
             "token": []
@@ -251,9 +251,9 @@
         ],
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Category slug",
+            "description": "Category id",
             "required": true,
             "type": "string"
           }
@@ -373,15 +373,15 @@
         }
       }
     },
-    "/tag/{slug}": {
+    "/tag/{id}": {
       "get": {
         "tags": ["Tags"],
-        "summary": "Get tag by slug",
+        "summary": "Get tag by id",
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Tag Slug",
+            "description": "Tag id",
             "required": true,
             "type": "string"
           }
@@ -403,7 +403,7 @@
       },
       "put": {
         "tags": ["Tags"],
-        "summary": "Update tag by slug",
+        "summary": "Update tag by id",
         "security": [
           {
             "token": []
@@ -411,9 +411,9 @@
         ],
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Tag slug",
+            "description": "Tag id",
             "required": true,
             "type": "string"
           },
@@ -447,7 +447,7 @@
       },
       "delete": {
         "tags": ["Tags"],
-        "summary": "Delete tag by slug",
+        "summary": "Delete tag by id",
         "security": [
           {
             "token": []
@@ -455,9 +455,9 @@
         ],
         "parameters": [
           {
-            "name": "slug",
+            "name": "id",
             "in": "path",
-            "description": "Tag slug",
+            "description": "Tag id",
             "required": true,
             "type": "string"
           }
