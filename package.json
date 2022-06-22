@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "serve": "nodemon --experimental-json-modules app.js",
-    "format": "prettier --write \"./**/*.js\""
+    "start": "node index.js",
+    "serve": "nodemon index.js",
+    "format": "prettier --write \"./**/*.js\"",
+    "deploy": "gcloud app deploy"
   },
   "author": "",
   "license": "ISC",
