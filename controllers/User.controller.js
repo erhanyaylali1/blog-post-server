@@ -4,6 +4,9 @@ import mongooes from 'mongoose';
 import UserRoles from '../config/UserRoles.js';
 import nodeoutlook from 'nodejs-nodemailer-outlook';
 import { nanoid } from 'nanoid';
+import { compile } from 'html-to-text';
+
+const compiledConvert = compile();
 
 class AuthController {
   get = (req, res) => {
@@ -90,9 +93,35 @@ class AuthController {
             });
           })
         );
-        const [count, view, likes, comments] = await Promise.all(promises).catch((err) => console.log(err));
 
-        return res.status(200).json({ user, count, view, likes, comments });
+        promises.push(
+          new Promise((resolve, reject) => {
+            Post.find({ user_id: id })
+              .select({ _id: 1, title: 1, content: 1, createdAt: 1, view: 1, photo: 1 })
+              .sort({ view: -1 })
+              .limit(5)
+              .exec((err, posts) => {
+                return resolve(posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) })));
+              });
+          })
+        );
+
+        promises.push(
+          new Promise((resolve, reject) => {
+            Post.find({ user_id: id })
+              .select({ _id: 1, title: 1, content: 1, createdAt: 1, view: 1 })
+              .sort({ view: -1 })
+              .limit(5)
+              .exec((err, posts) => resolve(posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) }))));
+              })
+        );
+
+        
+        const resp = await Promise.all(promises).catch((err) => console.log(err));
+        const [count, view, likes, comments, posts , trends] = resp;
+        
+
+        return res.status(200).json({ user, count, view, likes, comments, posts, trends });
       }
     });
   };
@@ -121,7 +150,7 @@ class AuthController {
         if (err) return res.status(400).json({ error: err });
         if (!posts) return res.status(404).json({ error: 'User not found' });
         else {
-          return res.status(200).json({ posts });
+          return res.status(200).json({ posts: posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) })) });
         }
       });
   };
@@ -158,7 +187,7 @@ class AuthController {
         if (err) return res.status(400).json({ error: err });
         if (!res) return res.status(404).json({ error: 'User not found' });
         else {
-          return res.status(200).json({ posts });
+          return res.status(200).json({ posts: posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) })) });
         }
       });
   };
@@ -173,7 +202,7 @@ class AuthController {
         if (err) return res.status(400).json({ error: err });
         if (!res) return res.status(404).json({ error: 'User not found' });
         else {
-          return res.status(200).json({ posts });
+          return res.status(200).json({ posts: posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) }) )});
         }
       });
   };
@@ -181,7 +210,6 @@ class AuthController {
   update_user_role = (req, res) => {
     const id = req.params.id;
     const { role } = req.body;
-    console.log(role);
     User.findByIdAndUpdate(id, { role }).exec((err, user) => {
       if (err) return res.status(400).json({ error: err });
       if (!user) return res.status(404).json({ error: 'User not found' });

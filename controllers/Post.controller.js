@@ -2,6 +2,9 @@ import mongooes from 'mongoose';
 import UserRoles from '../config/UserRoles.js';
 import Post from '../models/post.model.js';
 import Tag from '../models/tag.model.js';
+import { compile } from 'html-to-text';
+
+const compiledConvert = compile();
 
 class PostController {
   create = async (req, res) => {
@@ -67,8 +70,8 @@ class PostController {
         // If any error happens, return 500
         if (error) res.status(500).json({ error });
         else {
-          // Return success
-          res.status(200).json({ posts });
+          // Return success          
+          res.status(200).json({ posts: posts.map((post) => ({ ...post._doc, content: compiledConvert(post.content).slice(0,150) })) });
         }
       });
   };
